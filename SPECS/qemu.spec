@@ -2,13 +2,13 @@ Summary: qemu-dm device model
 Name: qemu
 Epoch: 2
 Version: 2.10.2
-Release: 4.2.0%{?dist}
+Release: 4.2.1%{?dist}
 License: GPL
 Requires: jemalloc
 Requires: xcp-clipboardd
 Requires: xengt-userspace
 
-Source0: https://code.citrite.net/rest/archive/latest/projects/XSU/repos/qemu/archive?at=v2.10.2&format=tar.gz&prefix=qemu-2.10.2#/qemu-2.10.2.tar.gz
+Source0: qemu.tar.gz
 Source1: SOURCES/qemu/qemu_trad_image.py
 
 Patch0: 0001-seccomp-changing-from-whitelist-to-blacklist.patch
@@ -112,9 +112,11 @@ Patch97: do_not_register_xen_backend_for_qdisk.patch
 Patch98: add-an-ide-read-cache.patch
 Patch99: disable-dirty-vram-tracking.patch
 Patch100: build-configuration.patch
+Patch101: 0001-usb-fix-setup_len-init-CVE-2020-14364.patch
+Patch102: 0001-rtl8139-fix-possible-out-of-bound-access.patch
 
-Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XSU/repos/qemu/archive?at=v2.10.2&format=tar.gz&prefix=qemu-2.10.2#/qemu-2.10.2.tar.gz) = ba87166e14ffd7299c35badc4c11f3fa3c129ec6
-Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XS/repos/qemu.pg/archive?format=tar&at=v4.2.0#/qemu.pg.tar) = c743aade3b240447d6cf313afce23e4e20d65120
+Provides: gitsha(ssh://git@code.citrite.net/XS/qemu.pg.git) = 6d79c77c724149aac9d32abd085856e628e90544
+Provides: gitsha(ssh://git@code.citrite.net/XSU/qemu.git) = ba87166e14ffd7299c35badc4c11f3fa3c129ec6
 
 BuildRequires: gcc
 BuildRequires: libaio-devel glib2-devel
@@ -159,6 +161,10 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %{_libexecdir}/*
 
 %changelog
+* Tue Aug 25 2020 Samuel Verschelde <stormi-xcp@ylix.fr> - 2.10.2-4.2.1
+- Security update
+- See http://xenbits.xen.org/xsa/advisory-335.html
+
 * Tue Dec 18 2018 Edwin Török <edvin.torok@citrix.com> - 2.10.2-4.1.4
 - CP-29626: Call blk_drain in NVMe reset code to avoid lockups
 - CP-29898: Implement NVME migration workaround
