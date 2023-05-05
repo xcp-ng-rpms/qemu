@@ -1,5 +1,11 @@
+%global package_speccommit 62a2d0e8c2b0904c9291c66f835365def3bb0aa7
+%global usver 4.2.1
+%global xsver 4.6.3
+%global xsrel %{xsver}%{?xscount}%{?xshash}
+%global package_srccommit v4.2.1
+
 # submodule ui/keycodemapdb
-%define keycodemapdb_cset 6b3d716e2b6472eb7189d3220552280ef3d832ce
+%define keycodemapdb_cset 22b8996dba9041874845c7446ce89ec4ae2b713d
 %define keycodemapdb_path ui/keycodemapdb
 
 # Control whether we build with the address sanitizer.
@@ -9,18 +15,16 @@ Summary: qemu-dm device model
 Name: qemu
 Epoch: 2
 Version: 4.2.1
-Release: 4.6.2.1%{?dist}
+Release: %{?xsrel}.1%{?dist}
 License: GPL
 Requires: xcp-clipboardd
 Requires: xengt-userspace
 ## We broke an interface used by xenopsd-xc without version signalling
 ## so we have to carry a conflicts line to say we broke it.
 Conflicts: xenopsd-xc < 0.123.0
-
-Source0: qemu.tar.gz
-Source1: SOURCES/qemu/qemu_trad_image.py
-Source2: https://code.citrite.net/rest/archive/latest/projects/XSU/repos/keycodemapdb/archive?at=6b3d716e2b6472eb7189d3220552280ef3d832ce&format=tar.gz&prefix=ui/keycodemapdb#/keycodemapdb-6b3d716e2b6472eb7189d3220552280ef3d832ce.tar.gz
-
+Source0: qemu-4.2.1.tar.gz
+Source1: qemu_trad_image.py
+Source2: keycodemapdb-22b8996dba9041874845c7446ce89ec4ae2b713d.tar.gz
 Patch0: 0001-usb-fix-setup_len-init-CVE-2020-14364.patch
 Patch1: 0001-scripts-qmp-Fix-shebang-and-imports.patch
 Patch2: 0001-xen-rework-pci_piix3_xen_ide_unplug.patch
@@ -30,80 +34,82 @@ Patch5: 0003-usb-hcd-ehci-Fix-error-handling-on-missing-device-fo.patch
 Patch6: 0001-pci-assert-configuration-access-is-within-bounds.patch
 Patch7: 0006-block-Avoid-stale-pointer-dereference-in-blk_get_aio.patch
 Patch8: 0001-ide-atapi-assert-that-the-buffer-pointer-is-in-range.patch
-Patch9: 0001-ide-atapi-check-logical-block-address-and-read-size-.patch
-Patch10: 0001-e1000-fail-early-for-evil-descriptor.patch
-Patch11: 0001-net-introduce-qemu_receive_packet.patch
-Patch12: 0002-e1000-switch-to-use-qemu_receive_packet-for-loopback.patch
-Patch13: 0003-rtl8139-switch-to-use-qemu_receive_packet-for-loopba.patch
-Patch14: 0001-aio-posix-fix-use-after-leaving-scope-in-aio_poll.patch
-Patch15: 0001-xen-mapcache-avoid-a-race-on-memory-map-while-using-.patch
-Patch16: 0001-xen-mapcache-Avoid-entry-lock-overflow.patch
-Patch17: hw-ide__check_null_block_before__cancel_dma_sync.patch
-Patch18: xen-platform-add-device-id-property.patch
-Patch19: xen-platform-add-class-id-property.patch
-Patch20: xen-platform-add-revision-property.patch
-Patch21: 0001-xen-platform-Handle-write-of-four-byte-build-number-.patch
-Patch22: 0002-xen-platform-Provide-QMP-query-commands-for-XEN-PV-d.patch
-Patch23: 0003-xen-platform-Emit-XEN_PLATFORM_PV_DRIVER_INFO-after-.patch
-Patch24: dont-set-a20-on-xen.patch
-Patch25: dont-init-cpus-on-xen.patch
-Patch26: 0001-xen-Emit-RTC_CHANGE-upon-TIMEOFFSET-ioreq.patch
-Patch27: remove-ioapic.patch
-Patch28: ignore-rtc-century-changes.patch
-Patch29: 0001-CP-33348-Allow-media-replace-qmp-command-to-take-a-n.patch
-Patch30: 0001-pc-Do-not-expect-to-have-a-fw_cfg-device.patch
-Patch31: 0003-xen-apic-Implement-unrealize.patch
-Patch32: 0004-hotplug-Implement-legacy-CPU-hot-unplug.patch
-Patch33: igd-upt.patch
-Patch34: check-unmigratable-devices-when-saving.patch
-Patch35: query-migratable.patch
-Patch36: 0001-nvme-simplify-namespace-code.patch
-Patch37: 0002-nvme-move-device-parameters-to-separate-struct.patch
-Patch38: 0003-nvme-fix-lpa-field.patch
-Patch39: 0004-nvme-add-missing-fields-in-identify-controller.patch
-Patch40: 0005-nvme-populate-the-mandatory-subnqn-and-ver-fields.patch
-Patch41: 0006-nvme-support-completion-queue-in-cmb.patch
-Patch42: 0007-nvme-support-Abort-command.patch
-Patch43: 0008-nvme-refactor-device-realization.patch
-Patch44: 0009-nvme-support-Asynchronous-Event-Request-command.patch
-Patch45: 0010-nvme-support-Get-Log-Page-command.patch
-Patch46: 0011-nvme-add-missing-mandatory-Features.patch
-Patch47: 0012-nvme-bump-supported-NVMe-revision-to-1.3d.patch
-Patch48: 0013-nvme-simplify-dma-cmb-mappings.patch
-Patch49: 0014-nvme-support-multiple-block-requests-per-request.patch
-Patch50: 0015-nvme-support-scatter-gather-lists.patch
-Patch51: 0016-nvme-support-multiple-namespaces.patch
-Patch52: nvme-ns-fix-null.patch
-Patch53: nvme-ns-allow-inactive.patch
-Patch54: nvme-close-backend.patch
-Patch55: 0001-CP-20436-Introduce-a-config-option-for-machines-comp.patch
-Patch56: pci-add-subsystem-id-properties.patch
-Patch57: pci-add-revision_id-property.patch
-Patch58: force-lba-geometry.patch
-Patch59: 0001-CP-21767-Don-t-accidently-unplug-ourselves-if-PCI_CL.patch
-Patch60: 0001-CP-21434-Implement-VBE-LFB-physical-address-register.patch
-Patch61: 0001-CA-256542-Workaround-unassigned-accesses-caused-by-b.patch
-Patch62: match-xen-pvdevice-location.patch
-Patch63: 0001-CA-289906-Use-legacy-HID-descriptors-for-USB-Tablet-.patch
-Patch64: revert_hw-i386__remove_deprecated_machines_pc-0.10_and_pc-0.11.patch
-Patch65: 0001-CP-17697-Initial-port-of-NVIDIA-VGPU-support-from-QEMU-trad.patch
-Patch66: usb-batch-frames.patch
-Patch67: 0001-CP-23753-Talk-to-new-clipboard-daemon.patch
-Patch68: rtc-no-ratelimit.patch
-Patch69: gvt-g.patch
-Patch70: 0001-Update-fd-handlers-to-support-sysfs_notify.patch
-Patch71: 0002-Fix-up-PCI-command-register-for-AMD-ATI-GPU-VFs.patch
-Patch72: 0003-Add-interception-layer-for-BAR-ops.patch
-Patch73: 0004-Add-AMD-code.patch
-Patch74: allocate-vram-reserved.patch
-Patch75: unplug-nvme-devices.patch
-Patch76: do_not_register_xen_backend_for_qdisk.patch
-Patch77: add-an-ide-read-cache.patch
-Patch78: disable-dirty-vram-tracking.patch
-Patch79: build-configuration.patch
-
-Provides: gitsha(ssh://git@code.citrite.net/XSU/qemu.git) = 6cdf8c4efa073eac7d5f9894329e2d07743c2955
-Provides: gitsha(ssh://git@code.citrite.net/XS/qemu.pg.git) = d0c5a0ab4d584544185763863efe52acdd4b1a5b
+Patch9: 0001-xen-bus-reduce-scope-of-backend-watch.patch
+Patch10: 0001-ide-atapi-check-logical-block-address-and-read-size-.patch
+Patch11: 0001-ui-update-keycodemapdb-submodule-commit.patch
+Patch12: 0001-e1000-fail-early-for-evil-descriptor.patch
+Patch13: 0001-net-introduce-qemu_receive_packet.patch
+Patch14: 0002-e1000-switch-to-use-qemu_receive_packet-for-loopback.patch
+Patch15: 0003-rtl8139-switch-to-use-qemu_receive_packet-for-loopba.patch
+Patch16: 0001-input-Add-lang1-and-lang2-to-QKeyCode.patch
+Patch17: 0001-aio-posix-fix-use-after-leaving-scope-in-aio_poll.patch
+Patch18: 0001-xen-mapcache-avoid-a-race-on-memory-map-while-using-.patch
+Patch19: 0001-xen-mapcache-Avoid-entry-lock-overflow.patch
+Patch20: hw-ide__check_null_block_before__cancel_dma_sync.patch
+Patch21: xen-platform-add-device-id-property.patch
+Patch22: xen-platform-add-class-id-property.patch
+Patch23: xen-platform-add-revision-property.patch
+Patch24: 0001-xen-platform-Handle-write-of-four-byte-build-number-.patch
+Patch25: 0002-xen-platform-Provide-QMP-query-commands-for-XEN-PV-d.patch
+Patch26: 0003-xen-platform-Emit-XEN_PLATFORM_PV_DRIVER_INFO-after-.patch
+Patch27: dont-set-a20-on-xen.patch
+Patch28: dont-init-cpus-on-xen.patch
+Patch29: 0001-xen-Emit-RTC_CHANGE-upon-TIMEOFFSET-ioreq.patch
+Patch30: remove-ioapic.patch
+Patch31: ignore-rtc-century-changes.patch
+Patch32: 0001-CP-33348-Allow-media-replace-qmp-command-to-take-a-n.patch
+Patch33: 0001-pc-Do-not-expect-to-have-a-fw_cfg-device.patch
+Patch34: 0003-xen-apic-Implement-unrealize.patch
+Patch35: 0004-hotplug-Implement-legacy-CPU-hot-unplug.patch
+Patch36: igd-upt.patch
+Patch37: check-unmigratable-devices-when-saving.patch
+Patch38: query-migratable.patch
+Patch39: 0001-nvme-simplify-namespace-code.patch
+Patch40: 0002-nvme-move-device-parameters-to-separate-struct.patch
+Patch41: 0003-nvme-fix-lpa-field.patch
+Patch42: 0004-nvme-add-missing-fields-in-identify-controller.patch
+Patch43: 0005-nvme-populate-the-mandatory-subnqn-and-ver-fields.patch
+Patch44: 0006-nvme-support-completion-queue-in-cmb.patch
+Patch45: 0007-nvme-support-Abort-command.patch
+Patch46: 0008-nvme-refactor-device-realization.patch
+Patch47: 0009-nvme-support-Asynchronous-Event-Request-command.patch
+Patch48: 0010-nvme-support-Get-Log-Page-command.patch
+Patch49: 0011-nvme-add-missing-mandatory-Features.patch
+Patch50: 0012-nvme-bump-supported-NVMe-revision-to-1.3d.patch
+Patch51: 0013-nvme-simplify-dma-cmb-mappings.patch
+Patch52: 0014-nvme-support-multiple-block-requests-per-request.patch
+Patch53: 0015-nvme-support-scatter-gather-lists.patch
+Patch54: 0016-nvme-support-multiple-namespaces.patch
+Patch55: nvme-ns-fix-null.patch
+Patch56: nvme-ns-allow-inactive.patch
+Patch57: nvme-close-backend.patch
+Patch58: 0001-Add-qemu-qcode-support-for-keys-F13-to-F24.patch
+Patch59: 0001-ps2-Don-t-send-key-release-event-for-Lang1-Lang2-key.patch
+Patch60: 0001-CP-20436-Introduce-a-config-option-for-machines-comp.patch
+Patch61: pci-add-subsystem-id-properties.patch
+Patch62: pci-add-revision_id-property.patch
+Patch63: force-lba-geometry.patch
+Patch64: 0001-CP-21767-Don-t-accidently-unplug-ourselves-if-PCI_CL.patch
+Patch65: 0001-CP-21434-Implement-VBE-LFB-physical-address-register.patch
+Patch66: 0001-CA-256542-Workaround-unassigned-accesses-caused-by-b.patch
+Patch67: match-xen-pvdevice-location.patch
+Patch68: 0001-CA-289906-Use-legacy-HID-descriptors-for-USB-Tablet-.patch
+Patch69: revert_hw-i386__remove_deprecated_machines_pc-0.10_and_pc-0.11.patch
+Patch70: 0001-CP-17697-Initial-port-of-NVIDIA-VGPU-support-from-QEMU-trad.patch
+Patch71: usb-batch-frames.patch
+Patch72: 0001-CP-23753-Talk-to-new-clipboard-daemon.patch
+Patch73: rtc-no-ratelimit.patch
+Patch74: gvt-g.patch
+Patch75: 0001-Update-fd-handlers-to-support-sysfs_notify.patch
+Patch76: 0002-Fix-up-PCI-command-register-for-AMD-ATI-GPU-VFs.patch
+Patch77: 0003-Add-interception-layer-for-BAR-ops.patch
+Patch78: 0004-Add-AMD-code.patch
+Patch79: allocate-vram-reserved.patch
+Patch80: unplug-nvme-devices.patch
+Patch81: do_not_register_xen_backend_for_qdisk.patch
+Patch82: add-an-ide-read-cache.patch
+Patch83: disable-dirty-vram-tracking.patch
+Patch84: build-configuration.patch
 
 BuildRequires: gcc
 BuildRequires: python2-devel
@@ -190,6 +196,14 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %{?_cov_results_package}
 
 %changelog
+* Fri May 05 2023 Gael Duperrey <gduperrey@vates.fr> - 4.2.1-4.6.3.1
+- Sync to hotfix XS82ECU1031
+- *** Upstream changelog ***
+- * Thu Apr 20 2023 Ross Lagerwall <ross.lagerwall@citrix.com> - 4.2.1-4.6.3
+- - Convert to Koji-based build
+- - CA-374355: Fix use of Lang1/Lang2 keys
+- - CA-376325: XSI-1393: Backport: xen-bus: reduce scope of backend watch
+
 * Wed Jul 20 2022 Gael Duperrey <gduperrey@vates.fr> - 4.2.1-4.6.2.1
 - Sync to hotfix XS82ECU1013
 - *** Upstream changelog ***
