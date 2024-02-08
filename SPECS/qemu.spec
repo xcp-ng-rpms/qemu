@@ -15,7 +15,7 @@ Summary: qemu-dm device model
 Name: qemu
 Epoch: 2
 Version: 4.2.1
-Release: %{?xsrel}%{?dist}
+Release: %{?xsrel}.0.xen417.1%{?dist}
 License: GPL
 Requires: xcp-clipboardd
 Requires: xengt-userspace
@@ -213,6 +213,9 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %{?_cov_results_package}
 
 %changelog
+* Thu Feb 08 2024 Thierry Escande <thierry.escande@vates.tech> - 4.2.1-5.2.4.0.xen417.1
+- Rebuild for Xen 4.17 test build
+
 * Tue Nov 21 2023 Bernhard Kaindl <bernhard.kaindl@cloud.com> - 4.2.1-5.2.4
 - CP-46102: Backport bugfixes for PCI passthrough using multifunction devices
   - hw/xen: set pci Atomic Ops requests for passthrough device
