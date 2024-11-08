@@ -15,7 +15,7 @@ Summary: qemu-dm device model
 Name: qemu
 Epoch: 2
 Version: 4.2.1
-Release: %{?xsrel}.2%{?dist}
+Release: %{?xsrel}.2.0.ydi.1%{?dist}
 License: GPL
 Requires: xcp-clipboardd
 Requires: xengt-userspace
@@ -195,7 +195,7 @@ extra_configure_argument+=('--enable-jemalloc')
 ./configure --cc=gcc --cxx=/dev/null --enable-xen --target-list=i386-softmmu \
     --prefix=%{_prefix} --bindir=%{_libdir}/xen/bin --datadir=%{_datarootdir} \
     --localstatedir=%{_localstatedir} --libexecdir=%{_libexecdir} --sysconfdir=%{_sysconfdir} \
-    --enable-werror --enable-libusb --enable-trace-backend=log \
+    --disable-werror --enable-libusb --enable-trace-backend=log \
     --disable-kvm --disable-docs --disable-guest-agent --disable-sdl \
     --disable-curses --disable-curl --disable-gtk --disable-bzip2 \
     --disable-strip --disable-gnutls --disable-nettle --disable-gcrypt \
@@ -240,6 +240,9 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %{?_cov_results_package}
 
 %changelog
+* Fri Jan 23 2026 Yann Dirson <yann.dirson@vates.tech> - 4.2.1-5.2.15.2.0.ydi.1
+- HACK disable -Werror
+
 * Thu Jan 08 2026 Thierry Escande <thierry.escande@vates.tech> - 4.2.1-5.2.15.2
 - Backport fixes for CVE-2021-3929
 
