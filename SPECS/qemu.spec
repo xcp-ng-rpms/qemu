@@ -143,7 +143,7 @@ Patch115: 81ef3d06c970c6b7ae4971ad552b2287af376f43.patch
 Patch116: msix_pba_log.patch
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
-BuildRequires: libjpeg-devel libpng-devel pixman-devel libdrm-devel
+BuildRequires: libjpeg-devel libpng-devel pixman-devel xenserver-libdrm-devel
 BuildRequires: xen-dom0-libs-devel xen-libs-devel libusbx-devel
 BuildRequires: libseccomp-devel
 %if %{with_asan} == 0
@@ -228,7 +228,6 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 
 %changelog
 * Fri Nov 08 2024 Yann Dirson <yann.dirson@vates.tech> - 4.2.1-5.2.10.1
-- TEST: breq standard libdrm-devel not xenserver-libdrm-devel
 - HACK disable -Werror
 
 * Tue Jun 04 2024 Frediano Ziglio <frediano.ziglio@cloud.com> - 4.2.1-5.2.10
