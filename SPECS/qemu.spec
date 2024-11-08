@@ -196,7 +196,7 @@ extra_configure_argument+=('--enable-jemalloc')
 ./configure --cc=gcc --cxx=/dev/null --enable-xen --target-list=i386-softmmu \
     --prefix=%{_prefix} --bindir=%{_libdir}/xen/bin --datadir=%{_datarootdir} \
     --localstatedir=%{_localstatedir} --libexecdir=%{_libexecdir} --sysconfdir=%{_sysconfdir} \
-    --enable-werror --enable-libusb --enable-trace-backend=log \
+    --disable-werror --enable-libusb --enable-trace-backend=log \
     --disable-kvm --disable-docs --disable-guest-agent --disable-sdl \
     --disable-curses --disable-curl --disable-gtk --disable-bzip2 \
     --disable-strip --disable-gnutls --disable-nettle --disable-gcrypt \
@@ -243,6 +243,7 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %changelog
 * Wed Apr 15 2026 Yann Dirson <yann.dirson@vates.tech> - 4.2.1-10.1
 - Sync with 4.2.1-10 from XS9
+- HACK disable -Werror
 - Comment out XCP-ng patches for now.
 - *** Upstream changelog ***
   * Wed Jan 07 2026 Ross Lagerwall <ross.lagerwall@citrix.com> - 4.2.1-10
