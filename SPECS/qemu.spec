@@ -1,7 +1,7 @@
 %global package_speccommit aa20fa170b47573c878f6eb7d97afa422e5edc67
 %global usver 4.2.1
 %global xsver 5.2.10
-%global xsrel %{xsver}%{?xscount}%{?xshash}
+%global xsrel %{xsver}.1%{?xscount}%{?xshash}
 %global package_srccommit v4.2.1
 
 # submodule ui/keycodemapdb
@@ -143,7 +143,7 @@ Patch115: 81ef3d06c970c6b7ae4971ad552b2287af376f43.patch
 Patch116: msix_pba_log.patch
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
-BuildRequires: libjpeg-devel libpng-devel pixman-devel xenserver-libdrm-devel
+BuildRequires: libjpeg-devel libpng-devel pixman-devel libdrm-devel
 BuildRequires: xen-dom0-libs-devel xen-libs-devel libusbx-devel
 BuildRequires: libseccomp-devel
 %if %{with_asan} == 0
@@ -227,6 +227,9 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %{?_cov_results_package}
 
 %changelog
+* Fri Nov 08 2024 Yann Dirson <yann.dirson@vates.tech> - 4.2.1-5.2.10.1
+- TEST: breq standard libdrm-devel not xenserver-libdrm-devel
+
 * Tue Jun 04 2024 Frediano Ziglio <frediano.ziglio@cloud.com> - 4.2.1-5.2.10
 - CP-46254: Make PCI passthrough work in lockdown mode
 
