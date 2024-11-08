@@ -182,7 +182,7 @@ extra_configure_argument+=('--enable-jemalloc')
 ./configure --cc=gcc --cxx=/dev/null --enable-xen --target-list=i386-softmmu \
     --prefix=%{_prefix} --bindir=%{_libdir}/xen/bin --datadir=%{_datarootdir} \
     --localstatedir=%{_localstatedir} --libexecdir=%{_libexecdir} --sysconfdir=%{_sysconfdir} \
-    --enable-werror --enable-libusb --enable-trace-backend=log \
+    --disable-werror --enable-libusb --enable-trace-backend=log \
     --disable-kvm --disable-docs --disable-guest-agent --disable-sdl \
     --disable-curses --disable-curl --disable-gtk --disable-bzip2 \
     --disable-strip --disable-gnutls --disable-nettle --disable-gcrypt \
@@ -229,6 +229,7 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %changelog
 * Fri Nov 08 2024 Yann Dirson <yann.dirson@vates.tech> - 4.2.1-5.2.10.1
 - TEST: breq standard libdrm-devel not xenserver-libdrm-devel
+- HACK disable -Werror
 
 * Tue Jun 04 2024 Frediano Ziglio <frediano.ziglio@cloud.com> - 4.2.1-5.2.10
 - CP-46254: Make PCI passthrough work in lockdown mode
