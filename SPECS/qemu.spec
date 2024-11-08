@@ -18,7 +18,6 @@ Version: 4.2.1
 Release: %{?xsrel}.2.0.ydi.1%{?dist}
 License: GPL
 Requires: xcp-clipboardd
-Requires: xengt-userspace
 ## We broke an interface used by xenopsd-xc without version signalling
 ## so we have to carry a conflicts line to say we broke it.
 Conflicts: xenopsd-xc < 0.123.0
@@ -133,7 +132,6 @@ Patch105: revert_hw-i386__remove_deprecated_machines_pc-0.10_and_pc-0.11.patch
 Patch106: 0001-CP-17697-Initial-port-of-NVIDIA-VGPU-support-from-QEMU-trad.patch
 Patch107: usb-batch-frames.patch
 Patch108: 0001-CP-23753-Talk-to-new-clipboard-daemon.patch
-Patch109: gvt-g.patch
 Patch110: allocate-guest-ram-reserved.patch
 Patch111: unplug-nvme-devices.patch
 Patch112: do_not_register_xen_backend_for_qdisk.patch
@@ -156,7 +154,7 @@ Patch1007: 0007-apic-disable-reentrancy-detection-for-apic-msi.patch
 
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
-BuildRequires: libjpeg-devel libpng-devel pixman-devel xenserver-libdrm-devel
+BuildRequires: libjpeg-devel libpng-devel pixman-devel libdrm-devel
 BuildRequires: xen-dom0-libs-devel xen-libs-devel libusbx-devel
 BuildRequires: libseccomp-devel
 %if %{with_asan} == 0
@@ -241,7 +239,12 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 
 %changelog
 * Fri Jan 23 2026 Yann Dirson <yann.dirson@vates.tech> - 4.2.1-5.2.15.2.0.ydi.1
+- Remove gvt-g support, which requires patched drm
+  - remove the patch
+  - breq standard libdrm-devel not xenserver-libdrm-devel
+  - stop pulling xengt-userspace
 - HACK disable -Werror
+- TEST: breq standard libdrm-devel not xenserver-libdrm-devel
 
 * Thu Jan 08 2026 Thierry Escande <thierry.escande@vates.tech> - 4.2.1-5.2.15.2
 - Backport fixes for CVE-2021-3929
