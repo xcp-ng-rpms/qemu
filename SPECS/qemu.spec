@@ -15,7 +15,7 @@ Summary: qemu-dm device model
 Name: qemu
 Epoch: 2
 Version: 4.2.1
-Release: %{?xsrel}.1%{?dist}
+Release: %{?xsrel}.2%{?dist}
 License: GPL
 Requires: xcp-clipboardd
 Requires: xengt-userspace
@@ -113,6 +113,9 @@ Patch84: add-an-ide-read-cache.patch
 Patch85: disable-dirty-vram-tracking.patch
 Patch86: build-configuration.patch
 
+# XCP-ng patches
+Patch1000: qemu-4.2.1-CVE-2023-3354.backport.patch
+
 BuildRequires: gcc
 BuildRequires: python2-devel
 BuildRequires: libaio-devel glib2-devel
@@ -198,6 +201,10 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %{?_cov_results_package}
 
 %changelog
+* Tue Feb 11 2025 Lucas Ravagnier <lucas.ravagnier@vates.tech> - 4.2.1-4.6.4.2
+- Add qemu-4.2.1-CVE-2023-3354.backport.patch to fix a CVE
+  of a NULL pointer dereference that can cause a DOS
+
 * Tue Jun 11 2024 Gael Duperrey <gduperrey@vates.tech> - 4.2.1-4.6.4.1
 - Sync to hotfix XS82ECU1068
 - *** Upstream changelog ***
