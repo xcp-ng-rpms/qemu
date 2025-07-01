@@ -131,7 +131,7 @@ Patch103: revert_hw-i386__remove_deprecated_machines_pc-0.10_and_pc-0.11.patch
 Patch104: 0001-CP-17697-Initial-port-of-NVIDIA-VGPU-support-from-QEMU-trad.patch
 Patch105: usb-batch-frames.patch
 Patch106: 0001-CP-23753-Talk-to-new-clipboard-daemon.patch
-Patch107: gvt-g.patch
+#Patch107: gvt-g.patch
 Patch108: allocate-guest-ram-reserved.patch
 Patch109: unplug-nvme-devices.patch
 Patch110: do_not_register_xen_backend_for_qdisk.patch
@@ -229,6 +229,7 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %changelog
 * Fri Nov 08 2024 Yann Dirson <yann.dirson@vates.tech> - 4.2.1-5.2.10.1
 - TEST: breq standard libdrm-devel not xenserver-libdrm-devel
+- don't apply the gvt-g patch, which requires patched drm
 - HACK disable -Werror
 
 * Tue Jun 04 2024 Frediano Ziglio <frediano.ziglio@cloud.com> - 4.2.1-5.2.10
