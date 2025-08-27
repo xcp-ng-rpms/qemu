@@ -144,6 +144,7 @@ Patch116: msix_pba_log.patch
 
 # XCP-ng patches
 Patch1000: qemu-4.2.1-CVE-2023-3354.backport.patch
+Patch1001: enable-virtio-vga.patch
 
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
@@ -231,6 +232,9 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %{?_cov_results_package}
 
 %changelog
+* Wed Aug 27 2025 Teddy Astie <teddy.astie@vates.tech> - 4.2.1-5.2.12.1.1
+- Add virtio-vga support
+
 * Thu Feb 13 2025 Yann Dirson <yann.dirson@vates.tech> - 4.2.1-5.2.12.1
 - Sync with xs8 4.2.1-5.2.12, no code change, only rebuild against libjemalloc.so.2:
   * Fri Aug 02 2024 Stephen Cheng <stephen.cheng@cloud.com> - 4.2.1-5.2.12
