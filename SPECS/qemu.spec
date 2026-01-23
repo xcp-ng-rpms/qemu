@@ -23,6 +23,9 @@ Requires: xcp-clipboardd
 Conflicts: xenopsd-xc < 0.123.0
 Source0: qemu-4.2.1.tar.gz
 Source2: keycodemapdb-22b8996dba9041874845c7446ce89ec4ae2b713d.tar.gz
+
+%define _default_patch_fuzz 2
+
 Patch0: 0001-usb-fix-setup_len-init-CVE-2020-14364.patch
 Patch1: 0001-scripts-checkpatch.pl-Only-allow-Python-3-interprete.patch
 Patch2: 0002-scripts-Explicit-usage-of-Python-3-scripts-with-__ma.patch
@@ -239,6 +242,7 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 
 %changelog
 * Fri Jan 23 2026 Yann Dirson <yann.dirson@vates.tech> - 4.2.1-5.2.15.2.0.ydi.1
+- HACK: set _default_patch_fuzz so patches don't need refresh
 - Remove gvt-g support, which requires patched drm
   - remove the patch
   - breq standard libdrm-devel not xenserver-libdrm-devel
