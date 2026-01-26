@@ -1,0 +1,72 @@
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Date: Thu, 4 Apr 2024 20:56:11 +0200
+Subject: [PATCH 1/2] hw/virtio: Introduce virtio_bh_new_guarded() helper
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Introduce virtio_bh_new_guarded(), similar to qemu_bh_new_guarded()
+but using the transport memory guard, instead of the device one
+(there can only be one virtio device per virtio bus).
+
+Inspired-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20240409105537.18308-2-philmd@linaro.org>
+
+Backported-by: Teddy Astie <teddy.astie@vates.tech>
+---
+Origin: https://github.com/qemu/qemu/commit/ec0504b989ca61e03636384d3602b7bf07ffe4da
+Bug-Vates: XCPNG-1332
+---
+ hw/virtio/virtio.c         | 10 ++++++++++
+ include/hw/virtio/virtio.h |  8 ++++++++
+ 2 files changed, 18 insertions(+)
+
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 6c71141ed1..c2dd27fad9 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3806,3 +3806,13 @@ static void virtio_register_types(void)
+ }
+ 
+ type_init(virtio_register_types)
++
++QEMUBH *virtio_bh_new_guarded_full(DeviceState *dev,
++                                   QEMUBHFunc *cb, void *opaque,
++                                   const char *name)
++{
++    DeviceState *transport = qdev_get_parent_bus(dev)->parent;
++
++    return qemu_bh_new_full(cb, opaque, name,
++                            &transport->mem_reentrancy_guard);
++}
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index e18756d50d..30f5f539a8 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -21,6 +21,7 @@
+ #include "qemu/event_notifier.h"
+ #include "standard-headers/linux/virtio_config.h"
+ #include "standard-headers/linux/virtio_ring.h"
++#include "block/aio.h"
+ 
+ /* A guest should never accept this.  It implies negotiation is broken. */
+ #define VIRTIO_F_BAD_FEATURE		30
+@@ -380,4 +381,11 @@ static inline void virtio_set_started(VirtIODevice *vdev, bool started)
+         vdev->started = started;
+     }
+ }
++
++QEMUBH *virtio_bh_new_guarded_full(DeviceState *dev,
++                                   QEMUBHFunc *cb, void *opaque,
++                                   const char *name);
++#define virtio_bh_new_guarded(dev, cb, opaque) \
++    virtio_bh_new_guarded_full((dev), (cb), (opaque), (stringify(cb)))
++
+ #endif
+-- 
+2.52.0
+
