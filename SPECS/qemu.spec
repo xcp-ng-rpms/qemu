@@ -15,7 +15,7 @@ Summary: qemu-dm device model
 Name: qemu
 Epoch: 2
 Version: 4.2.1
-Release: %{?xsrel}.2%{?dist}
+Release: %{?xsrel}.3%{?dist}
 License: GPL
 Requires: xcp-clipboardd
 Requires: xengt-userspace
@@ -153,6 +153,10 @@ Patch1004: 0004-async-Add-an-optional-reentrancy-guard-to-the-BH-API.patch
 Patch1005: 0005-async-avoid-use-after-free-on-re-entrancy-guard.patch
 Patch1006: 0006-hw-replace-most-qemu_bh_new-calls-with-qemu_bh_new_g.patch
 Patch1007: 0007-apic-disable-reentrancy-detection-for-apic-msi.patch
+# virtio-vga support
+Patch1008: virtio-vga-0001-hw-virtio-Introduce-virtio_bh_new_guarded-helper.patch
+Patch1009: virtio-vga-0002-hw-display-virtio-gpu-Protect-from-DMA-re-entrancy-b.patch
+Patch1010: enable-virtio-vga.patch
 
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
@@ -240,6 +244,9 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %{?_cov_results_package}
 
 %changelog
+* Mon Jan 26 2026 Teddy Astie <teddy.astie@vates.tech> - 4.2.1-5.2.15.3
+- Add virtio-vga support
+
 * Thu Jan 08 2026 Thierry Escande <thierry.escande@vates.tech> - 4.2.1-5.2.15.2
 - Backport fixes for CVE-2021-3929
 

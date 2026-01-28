@@ -1,0 +1,16 @@
+Enable compiling virtio-vga/gpu support.
+
+Signed-off-by: Teddy Astie <teddy.astie@vates.tech>
+---
+Bug-Vates: XCPNG-1332
+---
+diff --git a/default-configs/i386-softmmu.mak b/default-configs/i386-softmmu.mak
+--- a/default-configs/i386-softmmu.mak
++++ b/default-configs/i386-softmmu.mak
+@@ -54,3 +54,6 @@
+ CONFIG_USB_UHCI=y
+ CONFIG_VGA_CIRRUS=y
+ CONFIG_VGA_PCI=y
++CONFIG_VIRTIO_PCI=y
++CONFIG_VIRTIO_GPU=y
++CONFIG_VIRTIO_VGA=y
