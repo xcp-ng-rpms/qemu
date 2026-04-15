@@ -1,6 +1,6 @@
-%global package_speccommit fd46ddb1d9e304c24c87622b68dc8dc1ec72a856
+%global package_speccommit 6c33bf18936ceb227b4ea22852dbf02e066097e5
 %global usver 4.2.1
-%global xsver 5.2.17
+%global xsver 10
 %global xsrel %{xsver}%{?xscount}%{?xshash}
 %global package_srccommit v4.2.1
 
@@ -13,12 +13,11 @@
 
 Summary: qemu-dm device model
 Name: qemu
-Epoch: 2
+Epoch: 0
 Version: 4.2.1
 Release: %{?xsrel}.1%{?dist}
 License: GPL
 Requires: xcp-clipboardd
-Requires: xengt-userspace
 ## We broke an interface used by xenopsd-xc without version signalling
 ## so we have to carry a conflicts line to say we broke it.
 Conflicts: xenopsd-xc < 0.123.0
@@ -135,16 +134,16 @@ Patch107: revert_hw-i386__remove_deprecated_machines_pc-0.10_and_pc-0.11.patch
 Patch108: 0001-CP-17697-Initial-port-of-NVIDIA-VGPU-support-from-QEMU-trad.patch
 Patch109: usb-batch-frames.patch
 Patch110: 0001-CP-23753-Talk-to-new-clipboard-daemon.patch
-Patch111: gvt-g.patch
-Patch112: allocate-guest-ram-reserved.patch
-Patch113: unplug-nvme-devices.patch
-Patch114: do_not_register_xen_backend_for_qdisk.patch
-Patch115: add-an-ide-read-cache.patch
-Patch116: disable-dirty-vram-tracking.patch
-Patch117: build-configuration.patch
-Patch118: 0001-CP-46162-Resolve-the-Null-pointer-error-in-configure.patch
-Patch119: 81ef3d06c970c6b7ae4971ad552b2287af376f43.patch
-Patch120: msix_pba_log.patch
+Patch111: allocate-guest-ram-reserved.patch
+Patch112: unplug-nvme-devices.patch
+Patch113: do_not_register_xen_backend_for_qdisk.patch
+Patch114: add-an-ide-read-cache.patch
+Patch115: disable-dirty-vram-tracking.patch
+Patch116: build-configuration.patch
+Patch117: 0001-CP-46162-Resolve-the-Null-pointer-error-in-configure.patch
+Patch118: 81ef3d06c970c6b7ae4971ad552b2287af376f43.patch
+Patch119: msix_pba_log.patch
+Patch120: pci_passthrough.patch
 
 # XCP-ng patches
 Patch1000: qemu-4.2.1-CVE-2023-3354.backport.patch
@@ -158,7 +157,7 @@ Patch1007: 0007-apic-disable-reentrancy-detection-for-apic-msi.patch
 
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
-BuildRequires: libjpeg-devel libpng-devel pixman-devel xenserver-libdrm-devel
+BuildRequires: libjpeg-turbo-devel libpng-devel pixman-devel
 BuildRequires: xen-dom0-libs-devel xen-libs-devel libusbx-devel
 BuildRequires: libseccomp-devel
 %if %{with_asan} == 0
@@ -242,6 +241,42 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %{?_cov_results_package}
 
 %changelog
+* Wed Apr 15 2026 Yann Dirson <yann.dirson@vates.tech> - 4.2.1-10.1
+- Sync with 4.2.1-10 from XS9
+- *** Upstream changelog ***
+  * Wed Jan 07 2026 Ross Lagerwall <ross.lagerwall@citrix.com> - 4.2.1-10
+  - CA-407410: qmp: Fix race causing events to be sent during negotiation
+
+  * Tue Nov 18 2025 Ross Lagerwall <ross.lagerwall@citrix.com> - 4.2.1-9
+  - CA-420202: xen-hvm: Handle framebuffer relocation
+
+  * Thu Oct 23 2025 Roger Pau Monné <roger.pau@citrix.com> - 4.2.1-8
+  - Allow passthrough of devices from a PCI segment different than 0.
+
+  * Thu Oct 02 2025 Ross Lagerwall <ross.lagerwall@citrix.com> - 4.2.1-7
+  - CA-417654: Fix NVME bug which causes WS2025 install failures
+
+  * Wed Aug 27 2025 Andrew Cooper <andrew.cooper3@citrix.com> - 4.2.1-6
+  - Rebuild against Xen 4.20
+
+  * Mon May 19 2025 Frediano Ziglio <frediano.ziglio@cloud.com> - 4.2.1-5.3.5
+  - CP-54031: Rebuild to pick up changes in Xen
+
+  * Thu Apr 17 2025 Ross Lagerwall <ross.lagerwall@citrix.com> - 4.2.1-5.3.4
+  - CP-53474: Change QEMU to use new PCI config read/write domctl
+
+  * Wed Jan 22 2025 Alex Brett <alex.brett@cloud.com> - 4.2.1-5.3.3
+  - CP-53363: Update dependency for libjpeg-turbo
+
+  * Wed Jan 22 2025 Alex Brett <alex.brett@cloud.com> - 4.2.1-5.3.2
+  - CP-53238: Drop unused build requirement on libdrm
+
+  * Tue Jan 14 2025 AshwinH <ashwin.h@cloud.com> - 4.2.1-5.3.1
+  - CP-49883: Set epoch to 0 for XS9
+  - CP-42926: Drop GVT-g support
+
+  * Fri Aug 02 2024 Stephen Cheng <stephen.cheng@cloud.com> - 4.2.1-5.2.12
+  - CP-46112: Rebuild after new version of jemalloc
 
 * Mon Feb 02 2026 Quentin Casasnovas <quentin.casasnovas@vates.tech> - 4.2.1-5.2.17.1
 - Sync with 4.2.1-5.2.17
