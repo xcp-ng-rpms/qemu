@@ -145,15 +145,15 @@ Patch118: 81ef3d06c970c6b7ae4971ad552b2287af376f43.patch
 Patch119: msix_pba_log.patch
 Patch120: pci_passthrough.patch
 
-# XCP-ng patches
-Patch1000: qemu-4.2.1-CVE-2023-3354.backport.patch
-Patch1001: 0001-hw-nvme-reenable-cqe-batching.patch
-Patch1002: 0002-util-async-add-a-human-readable-name-to-BHs-for-debu.patch
-Patch1003: 0003-memory-prevent-dma-reentracy-issues.patch
-Patch1004: 0004-async-Add-an-optional-reentrancy-guard-to-the-BH-API.patch
-Patch1005: 0005-async-avoid-use-after-free-on-re-entrancy-guard.patch
-Patch1006: 0006-hw-replace-most-qemu_bh_new-calls-with-qemu_bh_new_g.patch
-Patch1007: 0007-apic-disable-reentrancy-detection-for-apic-msi.patch
+# # XCP-ng patches
+# Patch1000: qemu-4.2.1-CVE-2023-3354.backport.patch
+# Patch1001: 0001-hw-nvme-reenable-cqe-batching.patch
+# Patch1002: 0002-util-async-add-a-human-readable-name-to-BHs-for-debu.patch
+# Patch1003: 0003-memory-prevent-dma-reentracy-issues.patch
+# Patch1004: 0004-async-Add-an-optional-reentrancy-guard-to-the-BH-API.patch
+# Patch1005: 0005-async-avoid-use-after-free-on-re-entrancy-guard.patch
+# Patch1006: 0006-hw-replace-most-qemu_bh_new-calls-with-qemu_bh_new_g.patch
+# Patch1007: 0007-apic-disable-reentrancy-detection-for-apic-msi.patch
 
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
@@ -243,6 +243,7 @@ cp -r scripts/qmp %{buildroot}%{_datarootdir}/qemu
 %changelog
 * Wed Apr 15 2026 Yann Dirson <yann.dirson@vates.tech> - 4.2.1-10.1
 - Sync with 4.2.1-10 from XS9
+- Comment out XCP-ng patches for now.
 - *** Upstream changelog ***
   * Wed Jan 07 2026 Ross Lagerwall <ross.lagerwall@citrix.com> - 4.2.1-10
   - CA-407410: qmp: Fix race causing events to be sent during negotiation
