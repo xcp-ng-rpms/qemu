@@ -1,4 +1,4 @@
-From ed0c3b84cc662296a8c369bc87020609b12c2e55 Mon Sep 17 00:00:00 2001
+From 9097c80bf731138d3ae01a17848f1a9e178944eb Mon Sep 17 00:00:00 2001
 From: Yann Sionneau <yann.sionneau@vates.tech>
 Date: Thu, 21 May 2026 11:29:28 +0200
 Subject: [PATCH] add debug messages for pci devices
@@ -8,7 +8,7 @@ Subject: [PATCH] add debug messages for pci devices
  1 file changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 4a84e478ce..ac094bb727 100644
+index 4a84e478ce..5806acbc0d 100644
 --- a/hw/pci/pci.c
 +++ b/hw/pci/pci.c
 @@ -51,7 +51,7 @@
@@ -63,7 +63,7 @@ index 4a84e478ce..ac094bb727 100644
          g_free(path);
          return;
      }
-+    PCI_DPRINTF("%s: start of ROM: %04x\n", __func__, ptr);
++    PCI_DPRINTF("%s: start of ROM: %04x\n", __func__, (uint16_t *)ptr);
      g_free(path);
  
      if (is_default_rom) {
