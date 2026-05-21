@@ -1,16 +1,25 @@
-From bca9269dabbad5ef45063a6ce152eb38c44086cb Mon Sep 17 00:00:00 2001
+From f028dbe25877e0d2d9a9e09b7e3677ca6fce82b0 Mon Sep 17 00:00:00 2001
 From: Yann Sionneau <yann.sionneau@vates.tech>
 Date: Thu, 21 May 2026 11:29:28 +0200
 Subject: [PATCH] add debug messages for pci devices
 
 ---
- hw/pci/pci.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ hw/pci/pci.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 4a84e478ce..c69c06e903 100644
+index 4a84e478ce..a7cad7d74b 100644
 --- a/hw/pci/pci.c
 +++ b/hw/pci/pci.c
+@@ -51,7 +51,7 @@
+ #include "qapi/qapi-commands-pci.h"
+ #include "qemu/cutils.h"
+ 
+-//#define DEBUG_PCI
++#define DEBUG_PCI
+ #ifdef DEBUG_PCI
+ # define PCI_DPRINTF(format, ...)       printf(format, ## __VA_ARGS__)
+ #else
 @@ -2335,10 +2335,15 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
      char name[32];
      const VMStateDescription *vmsd;
