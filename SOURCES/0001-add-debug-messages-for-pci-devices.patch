@@ -1,14 +1,14 @@
-From f16ffbf54ce49eb39b75b3d5f7e3402385dee18a Mon Sep 17 00:00:00 2001
+From 0838f3b41b8e07748235cd09dae954fb220a7308 Mon Sep 17 00:00:00 2001
 From: Yann Sionneau <yann.sionneau@vates.tech>
 Date: Thu, 21 May 2026 11:29:28 +0200
 Subject: [PATCH] add debug messages for pci devices
 
 ---
- hw/pci/pci.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ hw/pci/pci.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 4a84e478ce..ceecaa3775 100644
+index 4a84e478ce..0c6c340d48 100644
 --- a/hw/pci/pci.c
 +++ b/hw/pci/pci.c
 @@ -51,7 +51,7 @@
@@ -20,15 +20,17 @@ index 4a84e478ce..ceecaa3775 100644
  #ifdef DEBUG_PCI
  # define PCI_DPRINTF(format, ...)       printf(format, ## __VA_ARGS__)
  #else
-@@ -2335,10 +2335,16 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+@@ -2334,11 +2334,18 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+     void *ptr;
      char name[32];
      const VMStateDescription *vmsd;
++    int devid = pci_get_word(pdev->config + PCI_DEVICE_ID);
  
 -    if (!pdev->romfile)
-+    PCI_DPRINTF("%s: device id: %04x\n", __func__, pdev->config[PCI_DEVICE_ID]);
++    PCI_DPRINTF("%s: device id: %04x\n", __func__, devid);
 +
 +    if (!pdev->romfile) {
-+	PCI_DPRINTF("%s: [dev id %04x] no romfile, returning\n", __func__, pdev->config[PCI_DEVICE_ID]);
++	PCI_DPRINTF("%s: [dev id %04x] no romfile, returning\n", __func__, devid);
          return;
 -    if (strlen(pdev->romfile) == 0)
 +    }
@@ -39,7 +41,7 @@ index 4a84e478ce..ceecaa3775 100644
  
      if (!pdev->rom_bar) {
          /*
-@@ -2352,14 +2358,17 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+@@ -2352,14 +2359,17 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
           * if the rom bar is disabled.
           */
          if (DEVICE(pdev)->hotplugged) {
@@ -57,7 +59,7 @@ index 4a84e478ce..ceecaa3775 100644
              rom_add_option(pdev->romfile, -1);
          }
          return;
-@@ -2418,6 +2427,7 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+@@ -2418,6 +2428,7 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
          pci_patch_ids(pdev, ptr, size);
      }
  
