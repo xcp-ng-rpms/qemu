@@ -1,0 +1,60 @@
+From bca9269dabbad5ef45063a6ce152eb38c44086cb Mon Sep 17 00:00:00 2001
+From: Yann Sionneau <yann.sionneau@vates.tech>
+Date: Thu, 21 May 2026 11:29:28 +0200
+Subject: [PATCH] add debug messages for pci devices
+
+---
+ hw/pci/pci.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 4a84e478ce..c69c06e903 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2335,10 +2335,15 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+     char name[32];
+     const VMStateDescription *vmsd;
+ 
+-    if (!pdev->romfile)
++
++    if (!pdev->romfile) {
++	PCI_DPRINTF("%s: no romfile, returning\n", __func__);
+         return;
+-    if (strlen(pdev->romfile) == 0)
++    }
++    if (strlen(pdev->romfile) == 0) {
++	PCI_DPRINTF("%s: romfile length of 0, returning\n", __func__);
+         return;
++    }
+ 
+     if (!pdev->rom_bar) {
+         /*
+@@ -2352,14 +2357,17 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+          * if the rom bar is disabled.
+          */
+         if (DEVICE(pdev)->hotplugged) {
++	    PCI_DPRINTF("%s: hotplugged, returning\n", __func__);
+             error_setg(errp, "Hot-plugged device without ROM bar"
+                        " can't have an option ROM");
+             return;
+         }
+ 
+         if (class == 0x0300) {
++	    PCI_DPRINTF("%s: calling rom_add_vga()\n", __func__);
+             rom_add_vga(pdev->romfile);
+         } else {
++	    PCI_DPRINTF("%s: calling rom_add_option()\n", __func__);
+             rom_add_option(pdev->romfile, -1);
+         }
+         return;
+@@ -2418,6 +2426,7 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+         pci_patch_ids(pdev, ptr, size);
+     }
+ 
++    PCI_DPRINTF("%s: calling pci_register_bar()\n", __func__);
+     pci_register_bar(pdev, PCI_ROM_SLOT, 0, &pdev->rom);
+ }
+ 
+-- 
+2.53.0
+

@@ -156,6 +156,9 @@ Patch1005: 0005-async-avoid-use-after-free-on-re-entrancy-guard.patch
 Patch1006: 0006-hw-replace-most-qemu_bh_new-calls-with-qemu_bh_new_g.patch
 Patch1007: 0007-apic-disable-reentrancy-detection-for-apic-msi.patch
 
+# Yann Debug patches
+Patch2000: 0001-add-debug-messages-for-pci-devices.patch
+
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
 BuildRequires: libjpeg-devel libpng-devel pixman-devel xenserver-libdrm-devel
