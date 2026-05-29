@@ -15,7 +15,7 @@ Summary: qemu-dm device model
 Name: qemu
 Epoch: 0
 Version: 10.1.0
-Release: %{?xsrel}.1%{?dist}
+Release: %{?xsrel}.1.0.neuf.1%{?dist}
 License: GPL
 Requires: xcp-clipboardd
 ## We broke an interface used by xenopsd-xc without version signalling
