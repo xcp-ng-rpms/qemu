@@ -92,6 +92,9 @@ Patch65: 81ef3d06c970c6b7ae4971ad552b2287af376f43.patch
 Patch66: msix_pba_log.patch
 Patch67: pci_passthrough.patch
 
+# XCP-ng patches
+Patch1000: 0001-xen-Fix-err-may-be-used-uninitialized.patch
+
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
 BuildRequires: libjpeg-turbo-devel libpng-devel pixman-devel
