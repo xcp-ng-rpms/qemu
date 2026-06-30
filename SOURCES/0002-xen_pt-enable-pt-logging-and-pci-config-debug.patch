@@ -1,0 +1,26 @@
+From e5ca9ed0e79319864d22e19ad8ae5cf0315dfda7 Mon Sep 17 00:00:00 2001
+From: Yann Sionneau <yann.sionneau@vates.tech>
+Date: Tue, 30 Jun 2026 10:42:50 +0200
+Subject: [PATCH 2/2] xen_pt: enable pt logging and pci config debug
+
+---
+ hw/xen/xen_pt.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
+index 027190fa44..c36c1e56ea 100644
+--- a/hw/xen/xen_pt.c
++++ b/hw/xen/xen_pt.c
+@@ -52,6 +52,9 @@
+  *         - Set entry->pirq to '-1'.
+  */
+ 
++#define XEN_PT_LOGGING_ENABLED
++#define XEN_PT_DEBUG_PCI_CONFIG_ACCESS
++
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include <sys/ioctl.h>
+-- 
+2.53.0
+

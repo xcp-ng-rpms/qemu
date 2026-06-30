@@ -158,6 +158,7 @@ Patch1007: 0007-apic-disable-reentrancy-detection-for-apic-msi.patch
 
 # Yann Debug patches
 Patch2000: 0001-add-debug-messages-for-pci-devices.patch
+Patch2001: 0002-xen_pt-enable-pt-logging-and-pci-config-debug.patch
 
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
