@@ -1,4 +1,4 @@
-From ff7a531d2088fee748bbe1b9ec648c271701f80a Mon Sep 17 00:00:00 2001
+From 4ebaf355029b5c6794d96fd213bf81ef9e0a81f1 Mon Sep 17 00:00:00 2001
 From: Yann Sionneau <yann.sionneau@vates.tech>
 Date: Wed, 1 Jul 2026 11:25:23 +0200
 Subject: [PATCH 3/4] pci: add debug in pci_default_write_config for EXP ROM
@@ -9,7 +9,7 @@ Subject: [PATCH 3/4] pci: add debug in pci_default_write_config for EXP ROM
  1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index d8812acdbe..899cb5dced 100644
+index d8812acdbe..06998ddd25 100644
 --- a/hw/pci/pci.c
 +++ b/hw/pci/pci.c
 @@ -1447,14 +1447,24 @@ void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int
@@ -31,7 +31,7 @@ index d8812acdbe..899cb5dced 100644
      }
 +
 +    if (addr == PCI_ROM_ADDRESS) {
-+    	PCI_DPRINTF("%s: written to emulated PCI device d->config[0x30]: %04x\n", __func__, d->config[addr]);
++    	PCI_DPRINTF("%s: written to emulated PCI device d->config[0x30]: %04x\n", __func__, *(uint32_t *)&(d->config[addr]));
 +    }
 +
 +
