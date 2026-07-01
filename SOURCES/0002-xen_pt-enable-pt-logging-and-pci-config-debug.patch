@@ -1,7 +1,7 @@
 From e5ca9ed0e79319864d22e19ad8ae5cf0315dfda7 Mon Sep 17 00:00:00 2001
 From: Yann Sionneau <yann.sionneau@vates.tech>
 Date: Tue, 30 Jun 2026 10:42:50 +0200
-Subject: [PATCH 2/2] xen_pt: enable pt logging and pci config debug
+Subject: [PATCH 2/4] xen_pt: enable pt logging and pci config debug
 
 ---
  hw/xen/xen_pt.c | 3 +++

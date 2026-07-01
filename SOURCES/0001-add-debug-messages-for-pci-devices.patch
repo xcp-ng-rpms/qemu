@@ -1,7 +1,7 @@
 From 4790abac77886318e6a3cfd9f6a8ced5a2918ae5 Mon Sep 17 00:00:00 2001
 From: Yann Sionneau <yann.sionneau@vates.tech>
 Date: Thu, 21 May 2026 11:29:28 +0200
-Subject: [PATCH] add debug messages for pci devices
+Subject: [PATCH 1/4] add debug messages for pci devices
 
 ---
  hw/pci/pci.c | 18 +++++++++++++++---
