@@ -160,6 +160,7 @@ Patch1007: 0007-apic-disable-reentrancy-detection-for-apic-msi.patch
 Patch2000: 0001-add-debug-messages-for-pci-devices.patch
 Patch2001: 0002-xen_pt-enable-pt-logging-and-pci-config-debug.patch
 Patch2002: 0003-pci-add-debug-in-pci_default_write_config-for-EXP-RO.patch
+Patch2003: 0004-xen_pt-log-values-before-and-after-merge-for-xen_pt_.patch
 
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel

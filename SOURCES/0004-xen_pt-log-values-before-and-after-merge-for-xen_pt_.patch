@@ -1,0 +1,28 @@
+From 5146f2292343a13c1069b49dbb54793ffb155c6a Mon Sep 17 00:00:00 2001
+From: Yann Sionneau <yann.sionneau@vates.tech>
+Date: Wed, 1 Jul 2026 11:56:59 +0200
+Subject: [PATCH 4/4] xen_pt: log values before and after merge for
+ xen_pt_exp_rom_bar_reg_write
+
+---
+ hw/xen/xen_pt_config_init.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/hw/xen/xen_pt_config_init.c b/hw/xen/xen_pt_config_init.c
+index c5c4e943a8..1bf0c9a435 100644
+--- a/hw/xen/xen_pt_config_init.c
++++ b/hw/xen/xen_pt_config_init.c
+@@ -562,7 +562,10 @@ static int xen_pt_exp_rom_bar_reg_write(XenPCIPassthroughState *s,
+ 
+     /* modify emulate register */
+     writable_mask = ~bar_ro_mask & valid_mask;
++
++    XEN_PT_LOG(&s->dev, "ROM BAR before merge value: %04x\n", *data);
+     *data = XEN_PT_MERGE_VALUE(*val, *data, writable_mask);
++    XEN_PT_LOG(&s->dev, "ROM BAR after merge value: %04x\n", *data);
+ 
+     /* create value for writing to I/O device register */
+     *val = XEN_PT_MERGE_VALUE(*val, dev_value, throughable_mask);
+-- 
+2.53.0
+
