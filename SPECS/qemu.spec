@@ -94,6 +94,7 @@ Patch67: pci_passthrough.patch
 
 # XCP-ng patches
 Patch1000: 0001-xen-Fix-err-may-be-used-uninitialized.patch
+Patch1001: enable-xenpv-machine.patch
 
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
