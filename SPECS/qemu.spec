@@ -96,6 +96,7 @@ Patch67: pci_passthrough.patch
 Patch1000: 0001-xen-Fix-err-may-be-used-uninitialized.patch
 Patch1001: enable-xenpv-machine.patch
 Patch1002: xen-legacy-backend-hotpluggable.patch
+Patch1003: xenpv-placeholder-console.patch
 
 BuildRequires: python3-devel
 BuildRequires: libaio-devel glib2-devel
