@@ -1,0 +1,54 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Tu Dinh <1257909+dinhngtu@users.noreply.github.com>
+Date: Wed, 30 Sep 2026 13:44:33 +0200
+Subject: [PATCH] xenfb
+
+Assisted-by: LLM
+Signed-off-by: Tu Dinh <ngoc-tu.dinh@vates.tech>
+
+diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+index f7abdb00ca74..f9a7f260a98a 100644
+--- a/hw/i386/xen/xen-hvm.c
++++ b/hw/i386/xen/xen-hvm.c
+@@ -1543,8 +1543,27 @@ void xen_hvm_init(PCMachineState *pcms, MemoryRegion **ram_memory)
+         error_report("xen backend core setup failed");
+         goto err;
+     }
++
++    /*
++     * Create the PV display nodes before the backend registration scans.
++     * This opens their event-channel handles before chroot, privilege drop
++     * and Xen domain restriction, rather than from later XenStore watches.
++     */
++    if (xenfb_enabled) {
++        atexit(xen_config_cleanup);
++        xen_config_dev_vfb(0, "vnc");
++        xen_config_dev_vkbd(0);
++    }
++
+     xen_be_register_common();
+ 
++    if (xenfb_enabled) {
++        if (xen_be_register("vfb", &xen_framebuffer_ops) != 0) {
++            error_report("xen framebuffer backend setup failed");
++            goto err;
++        }
++    }
++
+     QLIST_INIT(&xen_physmap);
+     xen_read_physmap(state);
+ 
+diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
+index 4412d7aa7639..87f344bba3d2 100644
+--- a/hw/xen/xen-legacy-backend.c
++++ b/hw/xen/xen-legacy-backend.c
+@@ -298,7 +298,8 @@ static struct XenLegacyDevice *xen_be_get_xendev(const char *type, int dom,
+ 
+     xendev->evtchndev = xenevtchn_open(NULL, 0);
+     if (xendev->evtchndev == NULL) {
+-        xen_pv_printf(NULL, 0, "can't open evtchn device\n");
++        xen_pv_printf(NULL, 0, "can't open evtchn device for %s/%d/%d: %s\n",
++                      type, dom, dev, strerror(errno));
+         qdev_unplug(DEVICE(xendev), NULL);
+         return NULL;
+     }
