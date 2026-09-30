@@ -15,7 +15,7 @@ Summary: qemu-dm device model
 Name: qemu
 Epoch: 2
 Version: 4.2.1
-Release: %{?xsrel}.1%{?dist}
+Release: %{?xsrel}.1.0.wip.2%{?dist}
 License: GPL
 Requires: xcp-clipboardd
 Requires: xengt-userspace
